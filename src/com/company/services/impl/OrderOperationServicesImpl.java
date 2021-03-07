@@ -12,7 +12,7 @@ public class OrderOperationServicesImpl implements OrderOperationServices {
 
     ArrayList<OrderOperation> orderOperations = new ArrayList<>();
 
-    OrderOperation findOrderOperation(String idCard){
+    OrderOperation findOrCreateOrderOperation(String idCard){
         for (OrderOperation item:orderOperations) {
             if(item.getIdCard().equals(idCard)){
                 return item;
@@ -24,15 +24,15 @@ public class OrderOperationServicesImpl implements OrderOperationServices {
     }
 
     @Override
-    public void createOrderServices(String name, double amount, ProductStatus productStatus, String idCard) {
-        OrderOperation orderOperation = findOrderOperation(idCard);
+    public void createProductOrderServices(String name, double amount, ProductStatus productStatus, String idCard) {
+        OrderOperation orderOperation = findOrCreateOrderOperation(idCard);
         Product product = new Product(name, amount, productStatus);
         orderOperation.addProducts(product);
     }
 
     OrderOperation findOperationByIdCard(String idCard){
         for (OrderOperation item:orderOperations) {
-            if(item.getIdCard().equals(idCard)){
+            if(item.getIdCard().equals(idCard) && item.getOrderStatus().equals(OrderStatus.OPEN)){
                 return item;
             }
         }
@@ -59,6 +59,7 @@ public class OrderOperationServicesImpl implements OrderOperationServices {
         }
         throw new RuntimeException("Операция по вашему номеру не найдена! ");
     }
+
 
 
 

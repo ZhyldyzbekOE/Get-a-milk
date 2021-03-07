@@ -17,6 +17,9 @@ public class Main {
             System.out.print("Ваш выбор: ");
             byte choose = scan.nextByte();
             if (choose == 1){
+                int unNum = (int) ((Math.random() * (10000 - 1)) + 1);
+
+                System.out.println("Уникальный номер вашего заказа. Сохраните этот номер: " + unNum);
                 System.out.print("Название продукта: ");
                 scan.nextLine();
                 String productName = scan.nextLine();
@@ -25,15 +28,14 @@ public class Main {
                 System.out.print("GR, KG, LTR, PIECE. Выберите измерения: ");
                 String unit = scan.next();
                 ProductStatus productStatus = ProductStatus.valueOf(unit);
-                System.out.print("Введите ваш номер: ");
-                String id = scan.next();
-                orderOperationServices.createOrderServices(productName, amount, productStatus, id);
+                String id = String.valueOf(unNum);
+                orderOperationServices.createProductOrderServices(productName, amount, productStatus, id);
             }else if(choose == 2){
-                System.out.print("Для закрытия операции введите ваш номер: ");
+                System.out.print("Для закрытия операции введите уникальный номер: ");
                 String idUser = scan.next();
                 orderOperationServices.closedOrderOperation(idUser);
             }else if (choose == 3){
-                System.out.print("Введи ваш номер: ");
+                System.out.print("Для просмотра введите уникальный номер заказа: ");
                 String idCar = scan.next();
                 orderOperationServices.showListByIdCard(idCar);
             }else if (choose == 4){
@@ -45,3 +47,4 @@ public class Main {
         }
     }
 }
+

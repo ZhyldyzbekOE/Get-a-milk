@@ -8,7 +8,9 @@ import com.company.services.impl.OrderOperationServicesImpl;
 public interface OrderOperationServices {
 
     OrderOperationServices INSTANCE = new OrderOperationServicesImpl();
-    void createOrderServices(String name, double amount, ProductStatus productStatus, String idCard);
+
+    void createProductOrderServices(String name, double amount, ProductStatus productStatus, String idCard);
     OrderOperation closedOrderOperation(String idCard);
     OrderOperation showListByIdCard(String idCard);
+
 }
