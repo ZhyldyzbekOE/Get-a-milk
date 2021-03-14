@@ -3,6 +3,6 @@ package com.company.enums;
 public enum OrderStatus {
 
     OPEN,
-    CLOSED
-
+    CLOSED,
+    PROCESS
 }

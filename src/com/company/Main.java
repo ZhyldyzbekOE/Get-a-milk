@@ -15,7 +15,7 @@ public class Main {
         while (true){
             System.out.println("---------------------------------------------------------------------------------------");
             System.out.println("Выберите дейтсвие: ");
-            System.out.println("1. Заказать продукты\n2. Закрыть операцию заказа\n3. Посмотерть список своих заказов\n4. Выход.");
+            System.out.println("1. Заказать продукты\n2. Закрыть операцию заказа\n3. Посмотерть список своих заказов\n4. Режим работы\n5. Удаление заказа.\n6. Выход.");
             System.out.print("Ваш выбор: ");
             byte choose = scan.nextByte();
             if (choose == 1){
@@ -42,19 +42,39 @@ public class Main {
                 System.out.print("Для закрытия операции введите уникальный номер: ");
                 String idUser = scan.next();
                 try {
-                    orderOperationServices.closedOrderOperation(idUser);
+                    orderOperationServices.closedOpenOrderOperation(idUser);
                 }catch (RuntimeException ex){
                     System.out.println("---------------------------------------------------------------------------------------");
-                    System.out.println("Операция по данному номеру уже закрыта!");
+                    System.out.println("Операция по данному номеру уже закрыта, или не существует!");
                 }
             }else if (choose == 3){
-                System.out.print("Для просмотра введите уникальный номер заказа: ");
-                String idCar = scan.next();
-                orderOperationServices.showListByIdCard(idCar);
+                try {
+                    System.out.print("Для просмотра введите уникальный номер заказа: ");
+                    String idCar = scan.next();
+                    orderOperationServices.showListByIdCard(idCar);
+                }catch (RuntimeException ex){
+                    System.out.println("---------------------------------------------------------------------------------------");
+                    System.out.println("На данный момент у вас не заказов!");
+                }
             }else if (choose == 4){
+                orderOperationServices.findOpenOperationForEmployee();
+            }else if (choose == 5){
+                try {
+                    System.out.print("Для удаления введите уникальный номер заказа: ");
+                    String idRemove = scan.next();
+                    orderOperationServices.removeOperationByIdCard(idRemove);
+                }catch (RuntimeException e){
+                    System.out.println("---------------------------------------------------------------------------------------");
+                    System.out.println("По данному ID, операция не найдена! ");
+                    System.out.println("---------------------------------------------------------------------------------------");
+                }
+
+            }
+            else if (choose==6){
                 System.out.println("До свидания!");
                 break;
-            }else{
+            }
+            else{
                 System.out.println("Некорректная команда!");
             }
         }

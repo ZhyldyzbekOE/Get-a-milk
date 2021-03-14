@@ -10,7 +10,9 @@ public interface OrderOperationServices {
     OrderOperationServices INSTANCE = new OrderOperationServicesImpl();
 
     void createProductOrderServices(String name, double amount, ProductStatus productStatus, String idCard);
-    OrderOperation closedOrderOperation(String idCard);
+    OrderOperation closedOpenOrderOperation(String idCard);
     OrderOperation showListByIdCard(String idCard);
+    void removeOperationByIdCard(String idCard);
+    void findOpenOperationForEmployee();
 
 }
