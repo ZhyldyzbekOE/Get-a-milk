@@ -8,32 +8,45 @@ public class Main {
 
     public static void main(String[] args) {
 
+        String ans;
         Scanner scan = new Scanner(System.in);
         OrderOperationServices orderOperationServices = OrderOperationServices.INSTANCE;
 
         while (true){
+            System.out.println("---------------------------------------------------------------------------------------");
             System.out.println("Выберите дейтсвие: ");
             System.out.println("1. Заказать продукты\n2. Закрыть операцию заказа\n3. Посмотерть список своих заказов\n4. Выход.");
             System.out.print("Ваш выбор: ");
             byte choose = scan.nextByte();
             if (choose == 1){
                 int unNum = (int) ((Math.random() * (10000 - 1)) + 1);
-
                 System.out.println("Уникальный номер вашего заказа. Сохраните этот номер: " + unNum);
-                System.out.print("Название продукта: ");
-                scan.nextLine();
-                String productName = scan.nextLine();
-                System.out.print("Количество: ");
-                int amount = scan.nextInt();
-                System.out.print("GR, KG, LTR, PIECE. Выберите измерения: ");
-                String unit = scan.next();
-                ProductStatus productStatus = ProductStatus.valueOf(unit);
-                String id = String.valueOf(unNum);
-                orderOperationServices.createProductOrderServices(productName, amount, productStatus, id);
+                do{
+                    System.out.print("Хотите оформить заказ? yes/no - ");
+                    ans = scan.next();
+                    if (ans.equals("no")){
+                        break;
+                    }
+                    System.out.print("Название продукта: ");
+                    scan.nextLine();
+                    String productName = scan.nextLine();
+                    System.out.print("Количество: ");
+                    int amount = scan.nextInt();
+                    System.out.print("GR, KG, LTR, PIECE. Выберите измерения: ");
+                    String unit = scan.next();
+                    ProductStatus productStatus = ProductStatus.valueOf(unit);
+                    String id = String.valueOf(unNum);
+                    orderOperationServices.createProductOrderServices(productName, amount, productStatus, id);
+                }while(ans.equals("yes"));
             }else if(choose == 2){
                 System.out.print("Для закрытия операции введите уникальный номер: ");
                 String idUser = scan.next();
-                orderOperationServices.closedOrderOperation(idUser);
+                try {
+                    orderOperationServices.closedOrderOperation(idUser);
+                }catch (RuntimeException ex){
+                    System.out.println("---------------------------------------------------------------------------------------");
+                    System.out.println("Операция по данному номеру уже закрыта!");
+                }
             }else if (choose == 3){
                 System.out.print("Для просмотра введите уникальный номер заказа: ");
                 String idCar = scan.next();

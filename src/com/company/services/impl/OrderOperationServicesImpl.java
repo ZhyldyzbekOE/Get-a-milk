@@ -43,17 +43,25 @@ public class OrderOperationServicesImpl implements OrderOperationServices {
     public OrderOperation closedOrderOperation(String idCard) {
         OrderOperation orderOperation = findOperationByIdCard(idCard);
         orderOperation.setOrderStatus(OrderStatus.CLOSED);
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("Операция закрыта! Спасибо что воспользовались нашими услугами!");
+        System.out.println("---------------------------------------------------------------------------------------");
         return orderOperation;
     }
 
     @Override
     public OrderOperation showListByIdCard(String idCard) {
+        OrderOperation orderOperation = findOrCreateOrderOperation(idCard);
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("Уникальный номер заказа: "+orderOperation.getIdCard());
+        System.out.println("Статус операции: "+orderOperation.getOrderStatus());
+        System.out.println("Список продуктов: ");
         for (OrderOperation item:orderOperations) {
             if(item.getIdCard().equals(idCard)){
                 for (Product item2:item.getProducts()) {
-                    System.out.println("Название продукта: "+item2.getName()+" - "+ item2.getAmount()+" - "+ item2.getProductAmount()+". Status: "+item.getOrderStatus()+". Ваш номер: "+item.getIdCard());
+                    System.out.println(item2.getName()+" - "+ item2.getAmount()+" - "+ item2.getProductAmount());
                 }
-
+                System.out.println("---------------------------------------------------------------------------------------");
                 return item;
             }
         }
